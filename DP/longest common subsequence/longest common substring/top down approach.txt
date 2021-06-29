@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+/* Utility function to get max of 2 integers */
+int maxi(int a, int b)
+{
+    return (a > b)? a : b;
+}
+
+/* Returns length of LCS for X[0..m-1], Y[0..n-1] */
+int lcs( char *X, char *Y, int m, int n )
+{
+    int L[m + 1][n + 1];
+    int i, j,count=0,ma=0;
+
+    /* Following steps build L[m+1][n+1] in
+       bottom up fashion. Note that L[i][j]
+       contains length of LCS of X[0..i-1]
+       and Y[0..j-1] */
+    for (i = 0; i <= m; i++)
+    {
+        for (j = 0; j <= n; j++)
+        {
+        if (i == 0 || j == 0)
+            L[i][j] = 0;
+
+        else if (X[i - 1] == Y[j - 1]){
+            L[i][j] = L[i - 1][j - 1] + 1;
+            count =L[i][j];
+        }
+
+        else
+        {
+            L[i][j] = 0;
+            ma=maxi(ma,count);
+        }
+    }
+    }
+
+    return ma;
+}
+
+
+
+// Driver Code
+int main()
+{
+    char X[] = "ABCDF";
+    char Y[] = "ABDEF";
+
+    int m = strlen(X);
+    int n = strlen(Y);
+
+    cout << "Length of Longest Common Substring is "
+         << lcs( X, Y, m, n );
+
+    return 0;
+}

@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int subset(int a[], int n ,int sum)
+{
+    //Initializing the matrix
+    int dp[n+1][sum+1];
+
+    for(int i=0;i<=n;i++)
+        dp[i][0]=1;
+
+    for(int i=1;i<=sum;i++)
+        dp[0][i]=0;
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=sum;j++){
+            if(a[i-1]<=j)
+                dp[i][j] = dp[i-1][j] + dp[i][j-a[i-1]];
+            else
+                dp[i][j] = dp[i-1][j];
+        }
+    }
+
+    return dp[n][sum];
+}
+
+int main()
+{
+    int n=3;
+    int a[]={1,2,5};
+    int sum=5;
+
+    cout<<subset(a,n,sum);
+    return 0;
+}
+
+
+O(N)
+int Solution::coinchange2(vector<int> &coins, int amount) {
+     int sz=coins.size();
+        vector<int>totalways(amount+1,0);
+        totalways[0]=1;
+        for(int i=0;i<sz;i++){
+            for(int j=coins[i];j<=amount;j++){
+                totalways[j]=(totalways[j]+totalways[j-coins[i]])%1000007;
+            }
+        }
+        return totalways[amount];
+}
