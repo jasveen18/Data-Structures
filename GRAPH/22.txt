@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+ 
+#define int long long
+ 
+vector< vector<pair<int,int> > > g;
+ 
+int32_t main()
+{-
+    ios_base::sync_with_stdio(0);
+    int n, m;
+    cin >> n >> m;
+    g.resize(n);
+    for (int i = 0; i < m; i++) {
+        int a, b,c;
+        cin >> a >> b >> c;
+        a--;
+        b--;
+        g[a].push_back({b,c});
+        g[b].push_back({a,c});
+    }
+    vector<int>d(n,2e18);
+    vector<int>p(n, -1);
+    vector<bool> used(n, false);
+    priority_queue<pair<int,int> > s;
+    int start = 0;
+    d[start] = 0;
+    s.push({-d[start], start});
+    while(!s.empty())
+    {
+        int v = s.top().second;
+        s.pop();
+        if (used[v]) {
+            continue;
+        }
+        used[v] = true;
+        for (auto e: g[v]) {
+            int to = e.first, len = e.second;
+            if(d[to] > d[v] + len)
+            {
+                d[to] = d[v] + len;
+                p[to] = v;
+                s.push({-d[to],to});
+            }
+        }
+    }
+    if (p[n - 1] == -1) {
+        cout << -1 << endl;
+        return 0;
+    }
+    int cur = n - 1;
+    vector<int> ans;
+    while (cur != -1) {
+        ans.push_back(cur);
+        cur = p[cur];
+    }
+    reverse(ans.begin(), ans.end());
+    for (int v: ans) {
+        cout << v + 1 << " ";
+    }
+    cout << endl;
+    return 0;
+}

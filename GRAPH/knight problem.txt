@@ -1,0 +1,77 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+#define ll long long int 
+#define inf 1000000000000 
+#define mod 1000000007 
+#define pb push_back 
+#define mp make_pair 
+#define all(v) v.begin(),v.end() 
+#define S second 
+#define F first 
+#define boost1 ios::sync_with_stdio(false); 
+#define boost2 cin.tie(0); 
+#define ict int t;scanf("%d",&t);cin.ignore();for(int i=0;i<t;i++) 
+#define repi(a,b) for(int i=a;i<b;i++) 
+#define repj(a,b) for(int j=a;j<b;j++) 
+#define TSIZE 1000009 
+ 
+int board[9][9]; 
+int visited[9][9]; 
+int dx[8] = {2,1,-1,-2,-2,-1,1,2}; 
+int dy[8] = {1,2,2,1,-1,-2,-2,-1}; 
+char s[57]; 
+ 
+int bfs() 
+{ 
+	repi(0,9) 
+	repj(0,9)visited[i][j]=0,board[i][j]=0; 
+ 
+	queue<pair<int,int>>q;	 
+	int ans=0; 
+	int x1=s[0]-'a'+1; 
+	int y1=s[1]-'0'; 
+	int x2=s[3]-'a'+1; 
+	int y2=s[4]-'0'; 
+ 
+	q.push({x1,y1}); 
+	visited[x1][y1]=1; 
+ 
+	int flag=0; 
+	while(!q.empty()) 
+	{	 
+		flag=0; 
+		auto temp=q.front(); 
+		q.pop(); 
+		 
+		for(int i=0;i<8;i++) 
+		{ 
+			int tx=temp.F+dx[i]; 
+			int ty=temp.S+dy[i]; 
+ 
+ 
+			if(tx>0 && tx<9 && ty>0 && ty<9 && !visited[tx][ty]) 
+			{ 
+				q.push({tx,ty}),visited[tx][ty]=1; 
+				board[tx][ty]=board[temp.F][temp.S]+1; 
+			 
+			} 
+		} 
+ 
+	} 
+	 
+	return board[x2][y2]; 
+} 
+ 
+ 
+int main() 
+{ 
+ 
+	 
+	ict 
+	{ 
+		scanf(" %[^\n]",s); 
+		cout<<bfs()<<endl; 
+	}	 
+ 
+	 
+}	 

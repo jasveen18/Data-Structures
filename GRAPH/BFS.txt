@@ -1,0 +1,44 @@
+//Program to print BFS traversal
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void BFS(vector<int>adj[],int s,int n)
+{
+    bool visited[n]={false};
+
+    queue<int> q;
+    visited[s]=true;
+    q.push(s);
+
+    while(!q.empty()){
+        int t=q.front();
+        q.pop();
+
+        cout<<t<<" ";
+
+        for(int i=0;i<adj[t].size();i++){
+            if(!visited[adj[t][i]]){
+                visited[adj[t][i]]=true;
+                q.push(adj[t][i]);
+            }
+        }
+    }
+
+}
+
+int main()
+{
+    int n=4;
+    vector<int> adj[n];
+    adj[0].push_back(1);
+    adj[0].push_back(2);
+    adj[1].push_back(2);
+    adj[2].push_back(0);
+    adj[2].push_back(3);
+    adj[3].push_back(3);
+    BFS(adj,2,4);
+
+    return 0;
+}

@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+#define MOD 100000
+#define inp_s     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define rep(i,n) for(int i=0;i<n;i++)
+ll x,y,n,level[100005],ans,a[1003],flag=0;
+bool vis[100005]={false};
+void bfs()
+{
+	level[x]=0;
+	ans=0;
+	vis[x]=true;
+	queue <ll> q;
+	q.push(x);
+	while(!q.empty())
+	{
+		int top=q.front();
+		q.pop();
+		rep(i,n)
+			if(!vis[(top*a[i])%MOD])
+			{
+				level[(top*a[i])%MOD]=level[top]+1;
+				ans = level[top]+1;
+				if((top*a[i])%MOD==y)
+				{
+					flag=1;
+					return;
+				}
+				q.push((top*a[i])%MOD);
+				vis[(top*a[i])%MOD]=true;
+			}
+	}
+}
+int main()
+{
+	inp_s;
+	cin >> x >> y >> n;
+	rep(i,n)cin >> a[i];
+	if(x==y){cout << "0\n";return 0;}
+	bfs();
+	if(flag)cout << ans << endl;
+	else cout << "-1\n";
+	return 0;
+}

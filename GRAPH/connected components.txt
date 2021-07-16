@@ -1,0 +1,54 @@
+bConnected Components
+
+#include <bits/stdc++.h>
+
+using namespace std;
+#define ll long long int
+
+bool visited[100001]={false};
+vector<ll> adj[100001];
+
+void dfs(ll s)
+{
+    visited[s]=true;
+    for(ll i=0;i<adj[s].size();i++){
+        if(visited[adj[s][i]]==false)
+            dfs(adj[s][i]);
+    }
+}
+
+
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--){
+        ll n,i,com=0,e;
+        cin>>n;
+        cin>>e;
+
+        memset(visited,0,sizeof visited);
+		for(int i=0;i<n;i++)
+		   adj[i].clear();
+
+        for(i=0;i<e;i++){
+            ll x,y;
+            cin>>x>>y;
+            adj[x].push_back(y);
+            adj[y].push_back(x);
+        }
+        for(i=0;i<n;i++){
+            if(visited[i]==false){
+                dfs(i);
+                com++;
+            }
+        }
+
+        if(e==0)
+            cout<<n<<endl;
+        else
+            cout<<com<<endl;
+
+    }
+    return 0;
+}
